@@ -3,9 +3,8 @@ package cn.lili.controller.coin;
 
 import cn.lili.common.enums.ResultUtil;
 import cn.lili.common.vo.ResultMessage;
-import cn.lili.modules.coin.entity.BinanceAccount;
 import cn.lili.modules.coin.entity.CoinQuotes;
-import cn.lili.modules.coin.service.BinanceService;
+import cn.lili.modules.coin.entity.Notices;
 import cn.lili.modules.coin.service.CoinQuotesService;
 import cn.lili.modules.common.dto.TopOptions;
 import cn.lili.modules.distribution.entity.vos.DistributionOrderSearchParams;
@@ -21,41 +20,25 @@ import java.util.List;
 
 @RestController
 @Api(tags = "个人coin信息")
-@RequestMapping("/buyer/coin")
-public class CoinController {
+@RequestMapping("/buyer/notice")
+public class NoticeController {
     @Autowired
     CoinQuotesService coinQuotesService;
 
-    @Autowired
-    BinanceService binanceService;
-
-
-
-    @ApiOperation(value = "获得账户信息")
-    @GetMapping("/account")
-    public ResultMessage<List<BinanceAccount>> getAccount() {
-
-        List<BinanceAccount> accountInfo = binanceService.getAccountInfo();
-
-        return ResultUtil.data(accountInfo);
-    }
 
     @ApiOperation(value = "获得coin信息")
     @GetMapping("/list")
-    public ResultMessage<List<TopOptions>> conlist(DistributionOrderSearchParams distributionOrderSearchParams) {
-        List<TopOptions> options=new ArrayList<>();
-
-        List<CoinQuotes> toplist = coinQuotesService.getToplist();
-
-        for (int i = 0; i < toplist.size(); i++) {
-            CoinQuotes coinQuotes = toplist.get(i);
-            TopOptions topOptions = new TopOptions(coinQuotes.getSymbol(),"USDT",coinQuotes.getPrice(),coinQuotes.getPrice());
-            options.add(topOptions);
+    public ResultMessage<List<Notices>> conlist(DistributionOrderSearchParams distributionOrderSearchParams) {
+        List<Notices> toplist =  new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            Notices n=new Notices();
+            n.setNoticeId("1");
+            n.setId("1");
+            n.setNoticeTitle("特朗普上台，发行meme币");
+            toplist.add(n);
         }
 
-
-
-        return ResultUtil.data(options);
+        return ResultUtil.data(toplist);
     }
 
 
@@ -71,12 +54,7 @@ public class CoinController {
             TopOptions topOptions = new TopOptions(coinQuotes.getSymbol(),"USDT",coinQuotes.getPrice(),coinQuotes.getPrice());
             options.add(topOptions);
         }
-
-
-
         return ResultUtil.data(options);
     }
-
-
 
 }

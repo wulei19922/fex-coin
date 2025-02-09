@@ -104,7 +104,7 @@ spring:
     props:
       #是否打印逻辑SQL语句和实际SQL语句，建议调试时打印，在生产环境关闭
       sql:
-        show: true
+        show: false
 
 # 忽略鉴权url
 ignored:
@@ -129,6 +129,8 @@ ignored:
     - /buyer/members/**
     - /buyer/common/**
     - /buyer/option/**
+    - /buyer/notice/*
+    - /buyer/coin/*
     - /buyer/passport/member/**
     - /buyer/passport/member/refresh/**
     - /buyer/promotion/pintuan/**
@@ -244,7 +246,7 @@ lili:
   # jwt 细节设定
   jwt-setting:
     # token过期时间（分钟）
-    tokenExpireTime: 30
+    tokenExpireTime: 530
 
   # 使用Spring @Cacheable注解失效时间
   cache:

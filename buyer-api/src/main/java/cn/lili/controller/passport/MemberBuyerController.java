@@ -299,6 +299,9 @@ public class MemberBuyerController {
     @ApiOperation(value = "获取用户信息")
     public ResultMessage<Member> getImUser() {
         AuthUser authUser = UserContext.getCurrentUser();
+        if(authUser==null){
+         return  ResultUtil.error(ResultCode.USER_NOT_LOGIN);
+        }
         return ResultUtil.data(memberService.getById(authUser.getId()));
     }
 

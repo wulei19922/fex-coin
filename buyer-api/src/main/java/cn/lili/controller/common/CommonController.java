@@ -27,7 +27,7 @@ public class CommonController {
     @GetMapping("/adlist")
     public ResultMessage<List<String>> adList(DistributionOrderSearchParams distributionOrderSearchParams) {
         List<String> ads=new ArrayList<>();
-        ads.add("http://localhost:8090/img/coin_back.jpg");
+        ads.add("http://192.168.1.3:8090/img/coin_back.jpg");
         return ResultUtil.data(ads);
     }
 
