@@ -264,7 +264,7 @@ lili:
       after-sale-topic: lili_after_sale_topic
       after-sale-group: lili_after_sale_group
 rocketmq:
-  name-server: rocketmq:9876
+  name-server: 192.168.0.226:9876
   producer:
     group: lili_group
     send-message-timeout: 30000
