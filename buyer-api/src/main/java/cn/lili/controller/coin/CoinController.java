@@ -40,16 +40,14 @@ public class CoinController {
         return ResultUtil.data(accountInfo);
     }
 
-    @ApiOperation(value = "获得coin信息")
+    @ApiOperation(value = "获得可以充值币的信息")
     @GetMapping("/list")
     public ResultMessage<List<TopOptions>> conlist(DistributionOrderSearchParams distributionOrderSearchParams) {
         List<TopOptions> options=new ArrayList<>();
 
-        List<CoinQuotes> toplist = coinQuotesService.getToplist();
 
-        for (int i = 0; i < toplist.size(); i++) {
-            CoinQuotes coinQuotes = toplist.get(i);
-            TopOptions topOptions = new TopOptions(coinQuotes.getSymbol(),"USDT",coinQuotes.getPrice(),coinQuotes.getPrice());
+        for (int i = 0; i < 1; i++) {
+            TopOptions topOptions = new TopOptions("USDT","USDT",0F,0F);
             options.add(topOptions);
         }
 

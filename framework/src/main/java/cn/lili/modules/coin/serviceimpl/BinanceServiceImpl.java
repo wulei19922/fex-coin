@@ -1,5 +1,7 @@
 package cn.lili.modules.coin.serviceimpl;
-
+import cn.lili.modules.coin.entity.ChargeAddress;
+import com.alibaba.fastjson.JSON;
+import okhttp3.*;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -25,9 +27,8 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -43,10 +44,7 @@ public class BinanceServiceImpl  implements BinanceService {
     public static void main(String[] args) throws Exception {
         System.out.println("Fetching account balance...");
         List<BinanceAccount> accountList = getAccountBalance();
-
-
-        System.out.println("\nFetching trade orders (specify a symbol if needed, e.g., BTCUSDT)...");
-        getTradeOrders(null);  // 可以指定交易对，例如"BTCUSDT"
+        getBinanceChargeAddress("ETH");
     }
 
     private static   List<BinanceAccount>  getAccountBalance() throws Exception {
@@ -75,6 +73,47 @@ public class BinanceServiceImpl  implements BinanceService {
         String extraParams = (symbol != null) ? "symbol=" + URLEncoder.encode(symbol, StandardCharsets.UTF_8.toString()) : "";
         queryBinance("/api/v3/allOrders", extraParams);
     }
+
+
+    private static String getBinanceChargeAddress(String symbol) throws Exception {
+        String url = "https://api.binance.com/sapi/v1/capital/deposit/address";
+        String coin = "USDT"; // 你想获取充值地址的币种
+        String network = "Arbitrum One"; // 充值网络
+
+        Map<String, String> parameters = new LinkedHashMap<>();
+        parameters.put("coin", coin);
+        parameters.put("timestamp", System.currentTimeMillis() + "");
+
+        String query = urlEncodeUTF8(parameters);
+        String signature = hmacSHA256Digest(query, SECRET_KEY);
+
+        String s = makeApiCall(url + "?" + query + "&signature=" + signature);
+
+
+        return  s;
+
+
+    }
+
+
+
+    public static String urlEncodeUTF8(Map<String, String> map)  {
+
+      try {
+          String collect = map.entrySet()
+                  .stream()
+                  .map(entry -> entry.getKey().toString() + "=" + entry.getValue().toString())
+                  .collect(Collectors.joining("&"));
+
+          return  collect;
+
+      }catch (Exception e ){
+          e.printStackTrace();
+      }
+
+      return "";
+    }
+
 
     private static String  queryBinance(String endpoint, String extraParams) throws Exception {
         long timestamp = System.currentTimeMillis();
@@ -122,7 +161,6 @@ public class BinanceServiceImpl  implements BinanceService {
 
         try {
             List<BinanceAccount> accountBalance = getAccountBalance();
-            System.out.println(accountBalance);
             return accountBalance;
         }catch (Exception e){
             log.error("获得账户信息异常",e);
@@ -137,5 +175,19 @@ public class BinanceServiceImpl  implements BinanceService {
 
 
         return false;
+    }
+
+    @Override
+    public ChargeAddress getChargeAddress(String memberId) {
+
+        try {
+            String address= this.getBinanceChargeAddress(memberId);
+            ChargeAddress chargeAddress = JSON.parseObject(address, ChargeAddress.class);
+            return chargeAddress;
+        }catch (Exception e ){
+
+            e.printStackTrace();
+        }
+        return  null;
     }
 }

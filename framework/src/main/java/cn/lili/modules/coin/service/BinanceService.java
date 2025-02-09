@@ -1,6 +1,7 @@
 package cn.lili.modules.coin.service;
 
 import cn.lili.modules.coin.entity.BinanceAccount;
+import cn.lili.modules.coin.entity.ChargeAddress;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface BinanceService {
 
 
     boolean startQBot(String id);
+
+    ChargeAddress getChargeAddress(String memberId);
 }

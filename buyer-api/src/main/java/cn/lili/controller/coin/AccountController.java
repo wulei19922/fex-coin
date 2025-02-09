@@ -7,6 +7,7 @@ import cn.lili.common.security.AuthUser;
 import cn.lili.common.security.context.UserContext;
 import cn.lili.common.vo.ResultMessage;
 import cn.lili.modules.coin.entity.BinanceAccount;
+import cn.lili.modules.coin.entity.ChargeAddress;
 import cn.lili.modules.coin.entity.CoinBot;
 import cn.lili.modules.coin.entity.CoinQuotes;
 import cn.lili.modules.coin.entity.vos.AccountVo;
@@ -49,6 +50,15 @@ public class AccountController {
         v.setBotStatus(botInfo.isOpenStatus());
         return ResultUtil.data(v);
     }
+
+    @ApiOperation(value = "获得充值地址")
+    @GetMapping("/address")
+    public ResultMessage<ChargeAddress> getChargeAddress() {
+        AuthUser currentUser = UserContext.getCurrentUser();
+        ChargeAddress chargeAddress = binanceService.getChargeAddress(currentUser.getId());
+        return ResultUtil.data(chargeAddress);
+    }
+
     @ApiOperation(value = "开启量化")
     @PostMapping("/startq")
     public ResultMessage startQBot(@RequestBody JSONObject status) {

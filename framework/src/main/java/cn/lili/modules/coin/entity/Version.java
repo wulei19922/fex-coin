@@ -55,6 +55,14 @@ public class Version extends BaseIdEntity {
     @ApiModelProperty("downloadUrl")
     private String downloadUrl;
 
+    @ApiModelProperty("androidUrl")
+    private String androidUrl;
+
+    @ApiModelProperty("iosUrl")
+    private String iosUrl;
+
+
+
 
 
 }
