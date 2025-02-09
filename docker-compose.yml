@@ -1,0 +1,14 @@
+version: '3'
+services: 
+  buyer-api:
+    image: buyer-api:v1
+    restart: always
+    container_name: buyer-api
+    ports:
+      - 8888:8888
+networks: 
+  rocketmq:
+    driver: bridge
+  stack:
+    driver: bridge
+
