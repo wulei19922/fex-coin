@@ -36,7 +36,7 @@ public class VersionController {
         version.setVersionCode(2);
         version.setVersionInfo("测试版本升级");
         version.setVersionName("v2.0");
-        version.setAndroidUrl("https://app.liuyingyong.cn/build/download/41467950-e6da-11ef-afec-7be31e5be4e3");
+        version.setAndroidUrl("https://mp-1111622f-a18f-459d-bc9c-5f9857bbfa81.cdn.bspapp.com/cloudstorage/__UNI__BF85590_20250209223046.apk");
         version.setUpdateType("solicit");
 
         return ResultUtil.data(version);
