@@ -7,6 +7,7 @@ import cn.lili.modules.coin.entity.BinanceAccount;
 import cn.lili.modules.coin.entity.Version;
 import cn.lili.modules.coin.service.BinanceService;
 import cn.lili.modules.coin.service.CoinQuotesService;
+import cn.lili.modules.coin.service.VersionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +27,13 @@ public class VersionController {
     @Autowired
     BinanceService binanceService;
 
-
+    @Autowired
+    VersionService versionService;
 
     @ApiOperation(value = "检查APP版本")
     @GetMapping("/app")
     public ResultMessage<Version> getAccount() {
-
-        Version version=new Version();
-        version.setVersionCode(2);
-        version.setVersionInfo("测试版本升级");
-        version.setVersionName("v2.0");
-        version.setAndroidUrl("https://mp-1111622f-a18f-459d-bc9c-5f9857bbfa81.cdn.bspapp.com/cloudstorage/__UNI__BF85590_20250209223046.apk");
-        version.setUpdateType("solicit");
-
+        Version version = versionService.getVersion();
         return ResultUtil.data(version);
     }
 

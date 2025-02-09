@@ -20,7 +20,7 @@ import java.util.Date;
  */
 @Data
 @TableName("coin_version")
-@ApiModel(value = "公告数据")
+@ApiModel(value = "版本信息")
 @NoArgsConstructor
 public class Version extends BaseIdEntity {
 
