@@ -11,7 +11,7 @@ services:
     restart: always
     container_name: common-api
     ports:
-      - 8889:8889
+      - 8890:8890
 networks: 
   rocketmq:
     driver: bridge
