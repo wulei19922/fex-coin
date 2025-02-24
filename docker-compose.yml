@@ -6,6 +6,12 @@ services:
     container_name: buyer-api
     ports:
       - 8888:8888
+  common-api:
+    image: common-api:v1
+    restart: always
+    container_name: common-api
+    ports:
+      - 8889:8889
 networks: 
   rocketmq:
     driver: bridge
